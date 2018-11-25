@@ -29,14 +29,37 @@ service = build('drive', 'v3', http=creds.authorize(Http()))
 def synchronize2():
 	global service
 	while(1):
+
+		localfiles=os.listdir("Hello")
+
+
 		data=[]
 		# print "\n\nNew Iteration"
 		
 		f=open("config.ts","r")
 		data=f.readlines();
 		f.close()
+
+		for i in localfiles:
+			checkvar=0
+			for j in data:
+				if(i == j.split("||")[0]):
+					checkvar=1
+
+			if(checkvar==0):
+				try:
+					print "Deleting ",i
+					os.remove("Hello/"+i)
+				except:
+
+					pass
+
 		data_len=len(data)
 		
+
+
+
+
 		f=open("config.ts","w")
 		for i in range(0,data_len):
 			# print i, data[i]
@@ -84,7 +107,7 @@ def synchronize2():
 
 				
 		print "Sleeping"
-		time.sleep(5)
+		time.sleep(60)
 		print "Woke Up"
 
 
